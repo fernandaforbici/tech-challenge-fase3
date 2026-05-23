@@ -25,6 +25,26 @@ Desenvolver uma interface gráfica em React para uma aplicação de blogging, pe
 
 Em desenvolvimento.
 
+## Funcionalidades implementadas
+
+- Listagem pública de posts
+- Busca de posts por palavra-chave
+- Leitura completa de post
+- Login de professores
+- Criação de posts
+- Edição de posts
+- Exclusão de posts
+- Área administrativa protegida
+
+## Status das funcionalidades
+
+| Funcionalidade        | Status                    |
+| Listagem de posts     | Implementado com mock     |
+| Busca de posts        | Implementado com mock     |
+| Leitura de post       | Em desenvolvimento        |
+| Login                 | Em desenvolvimento        |
+| Área administrativa   | Em desenvolvimento        |
+
 ## A aplicação será executada em :
 http://localhost:5173
 

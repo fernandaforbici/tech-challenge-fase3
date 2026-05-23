@@ -14,9 +14,9 @@ export function AppRoutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/create-post" element={<CreatePost />} />
-                <Route path="/edit-post" element={<EditPost />} />
-                <Route path="/post/:id" element={<PostDetails />} />
+                <Route path="/posts/new" element={<CreatePost />} />
+                <Route path="/posts/:id/edit" element={<EditPost />} />
+                <Route path="/posts/:id" element={<PostDetails />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>

@@ -28,7 +28,14 @@ Em desenvolvimento.
 ## A aplicação será executada em :
 http://localhost:5173
 
-
+## Rotas da aplicação
+Rota                | Descrição                     | Permissão de acesso
+`/`                 | Lista pública  de posts       | Público
+`/posts/:id`        | Leitura detalhada do post     | Público
+`/login`            | Login para usuário autenticado| Público
+`/posts/new`        | Criação de posts              | Protegido
+`/posts/:id/edit`   | Edição de post                | Protegido
+`/admin`            | administração de Postagens    | Protegido
 
 ## Como executar
 

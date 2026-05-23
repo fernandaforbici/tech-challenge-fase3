@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { DefaultLayout } from "../layouts/DefaultLayout";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { Admin } from "../pages/Admin";
@@ -11,13 +12,15 @@ export function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/posts/new" element={<CreatePost />} />
-                <Route path="/posts/:id/edit" element={<EditPost />} />
-                <Route path="/posts/:id" element={<PostDetails />} />
-                <Route path="*" element={<NotFound />} />
+                <Route element={<DefaultLayout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/posts/new" element={<CreatePost />} />
+                    <Route path="/posts/:id/edit" element={<EditPost />} />
+                    <Route path="/posts/:id" element={<PostDetails />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

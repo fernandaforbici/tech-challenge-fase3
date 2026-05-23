@@ -1,0 +1,7 @@
+export function PostDetails() {
+    return (
+        <div>
+            <h1>Detalhes do Post</h1>
+        </div>
+    );
+}

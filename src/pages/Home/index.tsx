@@ -1,7 +1,12 @@
+import { PostCard } from "../../components/PostCard";
+import { mockPosts } from "../../services/mockPosts";
 export function Home() {
     return (
-        <div>
+        <section>
             <h1>Home - Lista de Posts</h1>
-        </div>
+            {mockPosts.map((post) => (
+                <PostCard key={post.id} post={post} />
+            ))}
+        </section>
     );
 }

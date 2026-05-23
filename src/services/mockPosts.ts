@@ -1,0 +1,20 @@
+import type { Post } from "../types/Post";
+export const mockPosts: Post[] = [
+    {
+        id: 1,
+        title: "Primeiro Post",
+        description: "Este é o primeiro post do blog.",
+        content: "Conteúdo completo do primeiro post.",
+        author: "John Doe",
+        createdAt: "2023-01-01T00:00:00Z"
+    },
+    {
+        id: 2,
+        title: "Segundo Post",
+        description: "Este é o segundo post do blog.",
+        content: "Conteúdo completo do segundo post.",
+        author: "Jane Smith",
+        createdAt: "2023-01-02T00:00:00Z"
+    }
+
+];

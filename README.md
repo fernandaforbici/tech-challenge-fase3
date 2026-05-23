@@ -63,4 +63,9 @@ Rota                | Descrição                     | Permissão de acesso
 npm install
 npm run dev
 
+## Variáveis de ambiente
 
+Crie um arquivo `.env` na raiz do projeto com base no arquivo `.env.example`.
+
+```env
+VITE_API_URL=http://localhost:3000

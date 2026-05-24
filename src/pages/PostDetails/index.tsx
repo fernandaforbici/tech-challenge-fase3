@@ -1,9 +1,37 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { mockPosts } from "../../services/mockPosts";
+import { getPostById } from "../../services/postService";
+import { type Post } from "../../types/Post";
 
 export function PostDetails() {
     const { id } = useParams();
-    const post = mockPosts.find((p) => p.id === Number(id));
+
+    const [post, setPost] = useState<Post | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        async function loadPost() {
+            try {
+                if (!id) return;
+                const data = await getPostById(Number(id));
+                setPost(data);
+            } catch (err) {
+                setError("Erro ao carregar o post.");
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadPost();
+    }, [id]);
+
+    if (loading) {
+        return <p>Carregando detalhes do post...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     if (!post) {
         return (

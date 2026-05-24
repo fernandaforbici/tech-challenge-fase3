@@ -57,6 +57,10 @@ Rota                | Descrição                     | Permissão de acesso
 `/posts/:id/edit`   | Edição de post                | Protegido
 `/admin`            | administração de Postagens    | Protegido
 
+## Autenticação
+
+As rotas de criação, edição e administração são protegidas. O token de autenticação é armazenado no Local Storage e enviado nas requisições por meio do cabeçalho `Authorization`.
+
 ## Como executar
 
 ```bash

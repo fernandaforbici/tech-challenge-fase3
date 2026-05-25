@@ -13,7 +13,10 @@ export function PostDetails() {
     useEffect(() => {
         async function loadPost() {
             try {
-                if (!id) return;
+                if (!id) {
+                    setError("Post não encontrado.");
+                    return;
+                };
                 const data = await getPostById(Number(id));
                 setPost(data);
             } catch (err) {
@@ -29,28 +32,38 @@ export function PostDetails() {
         return <p>Carregando detalhes do post...</p>;
     }
 
-    if (error) {
-        return <p>{error}</p>;
-    }
 
-    if (!post) {
+    if (error || !post) {
         return (
             <section>
-                <h1>Post não encontrado</h1>
-                <Link to="/">Voltar para a lista de posts</Link>
+                <h1 className="page-title">Detalhes do post</h1>
+                <p className="alert alert-error">{error || "Post não encontrado."}</p>
+
+                <Link className="button button--ghost" to="/">Voltar para a lista de posts</Link>
             </section>
         );
     }
 
     return (
-        <article>
-            <h1>Detalhes do Post</h1>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <p><strong>Autor:</strong> {post.author}</p>
-            <p><strong>Criado em:</strong> {new Date(post.createdAt).toLocaleDateString()}</p>
-            <p>{post.content}</p>
-            <Link to="/">Voltar para a lista de posts</Link>
-        </article>
+        <section className="post-details">
+            <article className="card post-details__card">
+                <header className="post-details__header">
+                    <p className="post-details__label">Detalhes do Post</p>
+                    <h1 className="post-details__title">{post.title}</h1>
+                    <div className="post-details__meta">
+                        <span><strong>Autor:</strong> {post.author}</span>
+                        <span><strong>Criado em:</strong> {new Date(post.createdAt).toLocaleDateString("pt-BR")}</span>
+                    </div>
+                </header>
+                <p className="post-details__description">{post.description}</p>
+                <div className="post-details__content">
+                    <p>{post.content}</p>
+                </div>
+
+                <div className="form-actions">
+                    <Link className="button button--ghost" to="/">Voltar para a lista de posts</Link>
+                </div>
+            </article>
+        </section>
     );
 }

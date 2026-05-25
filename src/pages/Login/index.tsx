@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+//import { useAuth } from "../../hooks/useAuth";
 
 export function Login() {
-    const { login } = useAuth();
+    //const { login } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");

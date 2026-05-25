@@ -73,3 +73,16 @@ Crie um arquivo `.env` na raiz do projeto com base no arquivo `.env.example`.
 
 ```env
 VITE_API_URL=http://localhost:3000
+
+## Execução com Docker
+
+Para gerar a imagem:
+
+```bash
+docker build -t tech-challenge-blog .
+
+## Executar:
+docker run -p 8080:80 tech-challenge-blog
+
+## Acessar em:
+http://localhost:8080

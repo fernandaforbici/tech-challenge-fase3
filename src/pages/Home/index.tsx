@@ -23,24 +23,29 @@ export function Home() {
         loadPosts();
     }, []);
 
-        const filteredPosts = posts.filter((post) =>
-            `${post.title} ${post.description} ${post.author}`
-                .toLowerCase()
-                .includes(search.toLowerCase())
-        );
+    const filteredPosts = posts.filter((post) =>
+        `${post.title} ${post.description} ${post.author}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+    );
 
     if (loading) {
         return <p>Carregando posts...</p>;
     }
 
     if (error) {
-        return <p>{error}</p>;
-    }
-
         return (
             <section>
-                <h1>Home - Lista de Posts</h1>
-                
+                <h1 className="page-title">Home - Lista de Posts</h1>
+                <p className="alert alert--error">{error}</p>
+            </section>
+        );
+    }
+
+    return (
+        <section>
+            <h1 className="page-title">Home - Lista de Posts</h1>
+            <div className="search-box">
                 <label htmlFor="search">Buscar posts:</label>
                 <input
                     id="search"
@@ -50,13 +55,14 @@ export function Home() {
                     onChange={(e) => setSearch(e.target.value)}
                     style={{ display: "block", margin: "8px 0 24px", padding: "8px", width: "100%" }}
                 />
-                {filteredPosts.length === 0 ? (
-                    <p>Nenhum post encontrado.</p>
-                ) : (
-                    filteredPosts.map((post) => (
-                        <PostCard key={post.id} post={post} />
-                    ))
-                )}
-            </section>
-        );
-    }
+            </div>
+            {filteredPosts.length === 0 ? (
+                <p className="alert alert--empty">Nenhum post encontrado.</p>
+            ) : (
+                filteredPosts.map((post) => (
+                    <PostCard key={post.id} post={post} />
+                ))
+            )}
+        </section>
+    );
+}

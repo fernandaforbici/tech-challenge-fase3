@@ -2,10 +2,11 @@ import { AppRoutes } from "./routes/AppRoutes";
 function App() {
 
   return (
-    <>
-      <h1>Tech Challenge Blog</h1>
-      <AppRoutes />
-    </>
+    <div className="app">
+      <main className="main">
+        <AppRoutes />
+      </main>
+    </div>
   )
 }
 

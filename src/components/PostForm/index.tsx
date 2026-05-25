@@ -1,4 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 
 interface PostFormData {
@@ -32,35 +33,40 @@ export function PostForm({ initialValues, onSubmit, buttonText }: PostFormProps)
             onSubmit={onSubmit}
         >
             {({ isSubmitting }) => (
-                <Form>
-                    <div>
+                <Form className="form-card">
+                    <div className="form-group">
                         <label htmlFor="title">Título</label>
-                        <Field name="title" type="text" id="title" />
+                        <Field name="title" type="text" id="title" placeholder="Título do post" required />
                         <ErrorMessage name="title" component="p" />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="description">Descrição</label>
-                        <Field name="description" type="text" id="description" />
+                        <Field name="description" type="text" id="description" placeholder="Descrição do post" required />
                         <ErrorMessage name="description" component="p" />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="content">Conteúdo</label>
-                        <Field name="content" as="textarea" id="content" />
+                        <Field name="content" as="textarea" id="content" placeholder="Conteúdo do post" required />
                         <ErrorMessage name="content" component="p" />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="author">Autor</label>
-                        <Field name="author" type="text" id="author" />
+                        <Field name="author" type="text" id="author" placeholder="Autor do post" required />
                         <ErrorMessage name="author" component="p" />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="createdAt">Data de Criação</label>
-                        <Field name="createdAt" type="date" id="createdAt" />
+                        <Field name="createdAt" type="date" id="createdAt" required />
                         <ErrorMessage name="createdAt" component="p" />
                     </div>
-                    <button type="submit" disabled={isSubmitting}>
-                        {buttonText}
-                    </button>
+                    <div className="form-actions">
+                        <button className="button" type="submit" disabled={isSubmitting}>
+                            {buttonText}
+                        </button>
+                        <Link className="button button--ghost" to="/admin">
+                            Cancelar
+                        </Link>
+                    </div>
                 </Form>
             )}
 

@@ -6,6 +6,7 @@ import { type Post } from "../../types/Post";
 export function Admin() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
 
     async function loadPosts() {
         try {
@@ -13,6 +14,8 @@ export function Admin() {
             setPosts(data);
         } catch (err) {
             setError("Erro ao carregar os posts.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -34,26 +37,45 @@ export function Admin() {
         loadPosts();
     }, []);
 
+    if (loading) {
+        return <p>Carregando posts...</p>;
+    }
 
     return (
         <section>
-            <h1>Painel de Administração</h1>
-
-            <Link to="/posts/new">Criar Novo Post</Link>
-
+            <div className="admin-header">
+                <div>
+                    <h1 className="page-title">Painel de Administração</h1>
+                    <p className="page-description">
+                        Gerencie os posts publicados no blog.
+                    </p>
+                </div>
+                <Link className="button" to="/posts/new">
+                    Criar Novo Post
+                </Link>
+            </div>
             {error && <p>{error}</p>}
+            {posts.length === 0 ? (
+                <p className="alert alert--empty">Nenhum post cadastrado.</p>
+            ) : (
+                <div className="admin-list">
+                    {posts.map((post) => (
+                        <article className="card admin-card" key={post.id}>
+                            <div>
+                                <h2 className="admin-card__title">{post.title}</h2>
+                                <p className="admin-card__author">{post.author}</p>
+                            </div>
 
-            {posts.map((post) => (
-                <article key={post.id}>
-                    <h2>{post.title}</h2>
-                    <p>{post.author}</p>
-
-                    <Link to={`/posts/${post.id}/edit`}>Editar</Link>
-                    <button onClick={() => handleDelete(post.id)}>Excluir</button>
-
-                    <hr />
-                </article>
-            ))}
+                            <div className="admin-card__actions">
+                                <Link className="button button-secondary" to={`/posts/${post.id}/edit`}>Editar</Link>
+                                <button className="button button-danger" onClick={() => handleDelete(post.id)}>
+                                    Excluir
+                                </button>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            )}
         </section>
     );
 }

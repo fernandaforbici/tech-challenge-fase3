@@ -16,14 +16,17 @@ export function CreatePost() {
         navigate("/admin");
     }
     return (
-        <section>
-            <h1>Criar Novo Post</h1>
+        <section className="form-container">
+            <h1 className="page-title">Criar Novo Post</h1>
+            <p className="page-description">
+                Preencha os dados abaixo para publicar um novo post no blog.
+            </p>
             <PostForm
                 initialValues={{
                     title: "",
                     description: "",
                     content: "",
-                author: "",
+                    author: "",
                     createdAt: new Date().toISOString().split("T")[0],
                 }}
                 onSubmit={handleCreatePost}

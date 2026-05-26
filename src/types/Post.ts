@@ -5,4 +5,11 @@ export interface Post {
     content: string;
     author: string;
     createdAt: string;
+    updatedAt: string;
+}
+
+// Para respostas wrappadas (create, update, delete)
+export interface PostResponse {
+    message: string;
+    post: Post;
 }

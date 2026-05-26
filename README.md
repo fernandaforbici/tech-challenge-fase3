@@ -86,3 +86,7 @@ docker run -p 8080:80 tech-challenge-blog
 
 ## Acessar em:
 http://localhost:8080
+
+## CI/CD
+
+O projeto utiliza GitHub Actions para executar automaticamente os testes e o build da aplicação a cada push ou pull request nas branches principais.

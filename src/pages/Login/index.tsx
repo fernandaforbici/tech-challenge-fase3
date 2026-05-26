@@ -1,67 +1,98 @@
-import { useState, type FormEvent } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-//import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
+import styled from "styled-components";
+
+const loginSchema = Yup.object({
+    email: Yup.string()
+        .email("Email inválido")
+        .required("Email é obrigatório"),
+    password: Yup.string()
+        .min(6, "Mínimo 6 caracteres")
+        .required("Senha é obrigatorio"),
+});
+
+const Container = styled.div`
+max-width: 400px;
+margin: 2rem auto;
+padding: 2rem;
+`;
+
+const ErrorText = styled.span`
+  color: red;
+  font-size: 0.85rem;
+`;
 
 export function Login() {
-    //const { login } = useAuth();
+    const { login } = useAuth();
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    const [serverError, setServerError] = useState("");
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const validEmail = "admin@blog.com";
-        const validPassword = "123456";
+    // async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    //     event.preventDefault();
+    //     const validEmail = "admin@blog.com";
+    //     const validPassword = "123456";
 
-        try {
-            if (email === validEmail && password === validPassword) {
-                localStorage.setItem("@blog:token", "token-fake-123");
-                //await login(email, password);
-                navigate("/admin", { replace: true });
-            } else {
-                alert("Credenciais inválidas. Por favor, tente novamente.");
-            }
-        } catch (err) {
-            setError("Credenciais inválidas. Por favor, tente novamente.");
-        }
-    }
+    //     try {
+    //         if (email === validEmail && password === validPassword) {
+    //             localStorage.setItem("@blog:token", "token-fake-123");
+    //             //await login(email, password);
+    //             navigate("/admin", { replace: true });
+    //         } else {
+    //             alert("Credenciais inválidas. Por favor, tente novamente.");
+    //         }
+    //     } catch (err) {
+    //         setError("Credenciais inválidas. Por favor, tente novamente.");
+    //     }
+    // }
 
     return (
-        <section className="form-container">
-            <h1 className="page-title">Login do Professor</h1>
-            <p className="page-description">
-                Acesse a área administrativa para criar, editar e excluir posts.
-            </p>
-            {error && <p className="alert alert--error">{error}</p>}
-            <form className="form-card" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="email"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Senha:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <button className="button" type="submit">Entrar</button>
-                </div>
-            </form>
-        </section>
+        <Container>
+            <h2>Login</h2>
+            {serverError && <ErrorText>{serverError}</ErrorText>}
+            <Formik
+                initialValues={{ email: "", password: "" }}
+                validationSchema={loginSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                    try {
+                        setServerError("");
+                        await login(values.email, values.password);
+                        navigate("/admin", { replace: true });
+                    } catch (err: any) {
+                        const msg = err?.response?.data?.error || "Credenciais Inválidas";
+                        setServerError(msg);
+                    } finally {
+                        setSubmitting(false);
+                    }
+                }}
+            >
+                {({ isSubmitting }) => (
+                    <Form>
+                        <div>
+                            <label htmlFor="email">Email</label>
+                            <Field name="email" type="email" id="email" />
+                            <ErrorMessage name="email" component={ErrorText} />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password">Senha</label>
+                            <Field name="password" type="password" id="password" />
+                            <ErrorMessage name="password" component={ErrorText} />
+                        </div>
+
+                        <button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? "Entrando..." : "Entrar"}
+                        </button>
+
+                    </Form>
+                )}
+            </Formik>
+
+        </Container>
     );
 }
